@@ -8,8 +8,8 @@ pkgs.buildNpmPackage {
 
   npmDepsFetcherVersion = 2;
 
-  npmDepsHash = pkgs.lib.fakeHash;
-  #npmDepsHash = "sha256-0q89/z2e8pKcQhsq+L3rn6eJoVF2j1K64tuHh/auohw=";
+  #npmDepsHash = pkgs.lib.fakeHash;
+  npmDepsHash = "sha256-0q89/z2e8pKcQhsq+L3rn6eJoVF2j1K64tuHh/auohw=";
 
   dontNpmBuild = true;
 }
