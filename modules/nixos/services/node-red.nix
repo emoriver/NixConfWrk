@@ -12,7 +12,7 @@
     if [ ! -d node_modules/node-red-contrib-opcua ] || \
        [ ! -d "node_modules/@node-red-contrib-themes" ]; then
       ${pkgs.nodejs}/bin/npm install --prefix /var/lib/node-red \
-        "node-red-contrib-opcua@0.2.336" \
+        "@opcua/for-node-red" \
         "node-red-contrib-modbus" \
         "@node-red-contrib-themes/theme-collection@4" \
         --no-save --loglevel error
