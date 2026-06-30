@@ -14,8 +14,17 @@
       ${pkgs.nodejs}/bin/npm install --prefix /var/lib/node-red \
         "node-red-contrib-opcua@0.2.336" \
         "node-red-contrib-modbus" \
-        "@node-red-contrib-themes/theme-collection" \
+        "@node-red-contrib-themes/theme-collection@5" \
         --no-save --loglevel error
     fi
   '';
+
+  systemd.services.node-red.path = with pkgs; [
+    nodejs
+    bash
+    python3
+    gnumake
+    gcc
+    nodePackages.node-gyp
+  ];
 }
