@@ -21,6 +21,7 @@
     #../../modules/nixos/services/postgresql.nix
     #../../modules/nixos/services/docker.nix
     #../../modules/nixos/services/vpn.nix
+    ../../modules/nixos/services/samba.nix
   ];
 
   # Grafica ibrida Intel + Nvidia
@@ -57,6 +58,16 @@
 
   hardware.bluetooth.enable = true;
   hardware.bluetooth.powerOnBoot = true;
+
+  # ─ Configurazione Servizio Samba ─
+  services.mySambaSuite = {
+    enable = true;
+    workgroup = "WORKGROUP";
+    srvString = "w541onnixos";
+    netbiosName = "w541onnixos";
+    publicPath = "";
+    privatePath = "/home";
+  };
 
   # ----- rete e localizzazione -----
   networking = {
