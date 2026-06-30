@@ -14,7 +14,7 @@
       ${pkgs.nodejs}/bin/npm install --prefix /var/lib/node-red \
         "node-red-contrib-opcua@0.2.336" \
         "node-red-contrib-modbus" \
-        "@node-red-contrib-themes/theme-collection@5" \
+        "@node-red-contrib-themes/theme-collection@4" \
         --no-save --loglevel error
     fi
   '';
