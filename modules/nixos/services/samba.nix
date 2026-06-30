@@ -50,7 +50,7 @@ in
           "netbios name" = cfg.netbiosName;
           "security" = "user";
           #"hosts allow" = "192.168. 127.0.0.1 localhost";
-          "hosts deny" = "0.0.0.0/0";
+          #"hosts deny" = "0.0.0.0/0";
           "guest account" = "nobody";
           "map to guest" = "bad user";
         };
