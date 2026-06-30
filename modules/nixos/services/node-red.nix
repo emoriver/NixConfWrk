@@ -25,6 +25,5 @@
     python3
     gnumake
     gcc
-    nodePackages.node-gyp
   ];
 }
