@@ -12,14 +12,7 @@ in
   services.node-red = {
     enable = true;
     port = 1880;
-  };
-
-  settings = {
-    editorTheme = {
-      theme = {
-        name = "dracula"; 
-      };
-    };
+    configFile = ./node-red-settings.js;
   };
 
   systemd.tmpfiles.rules = [
