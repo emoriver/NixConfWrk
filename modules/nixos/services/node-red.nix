@@ -14,6 +14,14 @@ in
     port = 1880;
   };
 
+  settings = {
+    editorTheme = {
+      theme = {
+        name = "dracula"; 
+      };
+    };
+  };
+
   systemd.tmpfiles.rules = [
     "d /var/lib/node-red/node_modules 0755 node-red node-red -"
     "L+ /var/lib/node-red/node_modules/node-red-contrib-opcua - - - - ${nodeModulesPath}/node-red-contrib-opcua"
