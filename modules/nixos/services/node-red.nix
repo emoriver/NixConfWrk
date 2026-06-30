@@ -1,13 +1,5 @@
-{ pkgs, ... }:
+nix{ pkgs, lib, ... }:
 
-let
-  nodeRedPlugins = import ./node-red-packages/default.nix {
-    inherit pkgs;
-  };
-
-  nodeModulesPath = "${nodeRedPlugins}/lib/node_modules/node-red-env/node_modules";
-
-in
 {
   services.node-red = {
     enable = true;
@@ -15,13 +7,15 @@ in
     configFile = ./node-red-settings.js;
   };
 
-  systemd.tmpfiles.rules = [
-    "d /var/lib/node-red/node_modules 0755 node-red node-red -"
-    "L+ /var/lib/node-red/node_modules/node-red-contrib-opcua - - - - ${nodeModulesPath}/node-red-contrib-opcua"
-    "L+ /var/lib/node-red/node_modules/node-red-contrib-modbus - - - - ${nodeModulesPath}/node-red-contrib-modbus"
-    "L+ /var/lib/node-red/node_modules/@node-red-contrib-themes - - - - ${nodeModulesPath}/@node-red-contrib-themes"
-
-    # plug-in futuri
-    #"L+ /var/lib/node-red/node_modules/<nome> - - - - ${nodeModulesPath}/<nome>"
-  ];
+  systemd.services.node-red.preStart = lib.mkAfter ''
+    cd /var/lib/node-red
+    if [ ! -d node_modules/node-red-contrib-opcua ] || \
+       [ ! -d "node_modules/@node-red-contrib-themes" ]; then
+      ${pkgs.nodejs}/bin/npm install --prefix /var/lib/node-red \
+        "node-red-contrib-opcua@0.2.336" \
+        "node-red-contrib-modbus" \
+        "@node-red-contrib-themes/theme-collection" \
+        --no-save --loglevel error
+    fi
+  '';
 }
