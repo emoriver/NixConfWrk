@@ -1,4 +1,4 @@
-nix{ pkgs, lib, ... }:
+{ pkgs, lib, ... }:
 
 {
   services.node-red = {
