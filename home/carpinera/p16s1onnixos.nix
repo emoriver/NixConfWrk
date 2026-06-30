@@ -1,0 +1,44 @@
+{ config, lib, pkgs, pkgsUnstable,... }:
+
+{
+  # Import delle app Home-Manager (moduli)
+  imports = [
+    ../../modules/home/apps/zsh.nix
+    ../../modules/home/apps/git.nix
+    ../../modules/home/apps/firefox.nix
+    ../../modules/home/apps/vscodium.nix
+    ../../modules/home/apps/kiro.nix
+
+  ];
+  
+  # Identità + versione HM
+  home.username = "carpinera";
+  home.homeDirectory = "/home/carpinera";
+  home.stateVersion = "25.11";
+
+  # Pacchetti utente
+  home.packages =
+    (with pkgs; [
+      bat eza fd ripgrep fzf jq yq-go
+
+      filezilla
+      dbeaver-bin
+
+      imagemagick
+      yazi
+
+      nixd
+    ])
+    ++(with pkgsUnstable; [
+      #kiro  # installato tramite modules/home/apps/kiro.nix
+  ]);
+
+
+  # Esempio di file utente gestito da HM
+  #home.file.".config/myapp/config.toml".text = ''
+  #  # Config specifica per host__1__
+  #  enabled = true
+  #'';
+
+  systemd.user.startServices = "sd-switch";
+}
