@@ -10,6 +10,7 @@
 
     # servizi
     ../../modules/nixos/services/node-red.nix
+    ../../modules/nixos/services/thingsboard.nix
   ];
   
   nix.settings = { sandbox = false; };  
@@ -25,6 +26,8 @@
       allowedTCPPorts = [
         22 # SSH
         1880 # node-red
+        8080 # thingsboard UI/API
+        # 1883 8883 7070 # MQTT / MQTT-SSL / Edge RPC, se servono
       ];
 /*      
       allowedUDPPorts = [
@@ -68,6 +71,8 @@
   };
 
   security.pam.services.sshd.allowNullPassword = false;
+
+  enableThingsboard = true;
 
 
   # ----- impostazioni di nix -----
