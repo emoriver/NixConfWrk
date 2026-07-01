@@ -24,7 +24,7 @@
       enable = true;
       allowedTCPPorts = [
         22 # SSH
-
+        5432 # PostgreSQL
       ];
 /*      
       allowedUDPPorts = [
