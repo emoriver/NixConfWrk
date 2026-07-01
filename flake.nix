@@ -87,6 +87,13 @@
         users = {
           carpinera = ./home/carpinera/nixct-build-83.nix;
         };
+      };
+      nixct-pg-69 = {
+        system     = "x86_64-linux";
+        hostModule = ./hosts/nixct-pg-69;
+        users = {
+          carpinera = ./home/carpinera/nixct-pg-69.nix;
+        };
       };      
     };
 
