@@ -12,20 +12,21 @@ in {
   config = lib.mkIf config.enablePostgresql {
     services.postgresql = {
       enable = true;
-      package = pkgs.postgresql;
-      dataDir = "/var/lib/postgresql";
+      package = pkgs.postgresql_18;
+      extensions = ps: [ ps.timescaledb ];
+
+      enableTCPIP = true; # equivale a listen_addresses = "*"
+
+      settings = {
+        shared_preload_libraries = "timescaledb";
+        max_connections = 100;
+        shared_buffers = "256MB";
+      };
 
       authentication = ''
         # TYPE  DATABASE        USER            ADDRESS                 METHOD
         local   all             all                                     trust
-        host    all             all             0.0.0.0/0               md5
-        host    all             all             ::/0                    md5
-      '';
-
-      extraConfig = ''
-        listen_addresses = '*'
-        max_connections = 100
-        shared_buffers = 256MB
+        host    all             all             10.0.0.0/8              md5
       '';
     };
 

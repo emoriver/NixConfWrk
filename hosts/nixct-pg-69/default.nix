@@ -68,16 +68,7 @@
 
   security.pam.services.sshd.allowNullPassword = false;
 
-  services.postgresql = {
-    enable = true;
-    package = pkgs.postgresql_18;
-
-    extensions = ps: [ ps.timescaledb ];
-
-    settings = {
-      shared_preload_libraries = "timescaledb";
-    };
-  };
+  enablePostgresql = true;
 
 
   # ----- impostazioni di nix -----
