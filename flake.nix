@@ -74,11 +74,11 @@
           carpinera = ./home/carpinera/p16s1onnixos.nix;
         };
       };
-      nixct-ndred-82 = {
+      nixct-ndrdtb-82 = {
         system     = "x86_64-linux";
-        hostModule = ./hosts/nixct-ndred-82;
+        hostModule = ./hosts/nixct-ndrdtb-82;
         users = {
-          carpinera = ./home/carpinera/nixct-ndred-82.nix;
+          carpinera = ./home/carpinera/nixct-ndrdtb-82.nix;
         };
       };
       nixct-build-83 = {
