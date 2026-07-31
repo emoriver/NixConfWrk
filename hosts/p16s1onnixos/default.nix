@@ -50,13 +50,31 @@
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 
+      allowedTCPPorts = [
         22 # SSH
         1880 # Node-RED
       ];
 
       # allowedUDPPorts = [ ];
     };
+
+    bridges = {
+      "br0" = {
+        interfaces = [ "enp1s0f0" ];
+      };
+    };
+
+    interfaces = {
+      "enp1s0f0".useDHCP = false; # L'interfaccia fisica non deve avere IP
+      "br0" = {
+        useDHCP = true;
+
+        #useDHCP = false;
+        #ipv4.addresses = [{
+        #  address = "192.168.0.100";
+        #  prefixLength = 24;
+        #}];
+      };
   };
 
   i18n = {
