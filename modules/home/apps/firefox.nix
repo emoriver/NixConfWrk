@@ -1,9 +1,9 @@
 { config, ... }:
 
 {
-  home.sessionVariables = {
-    MOZ_ENABLE_WAYLAND = "0"; # problema della sparizione dei menu
-  };
+  #home.sessionVariables = {
+  #  MOZ_ENABLE_WAYLAND = "0"; # problema della sparizione dei menu
+  #};
 
   programs.firefox = {
     enable = true;
