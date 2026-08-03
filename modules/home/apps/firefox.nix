@@ -2,7 +2,7 @@
 
 {
   home.sessionVariables = {
-    MOZ_ENABLE_WAYLAND = "1"; # problema della sparizione dei menu
+    MOZ_ENABLE_WAYLAND = "1"; # forza Wayland nativo per swipe gesture; se i menu tornano vuoti dopo un update, provare "0"
   };
 
   programs.firefox = {
