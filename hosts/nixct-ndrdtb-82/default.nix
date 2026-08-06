@@ -11,6 +11,7 @@
     # servizi
     ../../modules/nixos/services/node-red.nix
     ../../modules/nixos/services/thingsboard.nix
+    ../../modules/nixos/services/docker.nix
   ];
   
   nix.settings = { sandbox = false; };  
@@ -73,7 +74,7 @@
   security.pam.services.sshd.allowNullPassword = false;
 
   enableThingsboard = true;
-
+  enableDocker = true;
 
   # ----- impostazioni di nix -----
   nixpkgs.config.allowUnfree = true;
