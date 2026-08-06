@@ -28,6 +28,8 @@
         22 # SSH
         1880 # node-red
         8080 # thingsboard UI/API
+        57513 # kepware edge rpc
+        49330 # kepware edge rpc
         # 1883 8883 7070 # MQTT / MQTT-SSL / Edge RPC, se servono
       ];
 /*      
