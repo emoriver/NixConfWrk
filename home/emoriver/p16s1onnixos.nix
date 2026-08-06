@@ -10,8 +10,8 @@
     ../../modules/home/apps/zsh.nix
     ../../modules/home/apps/git.nix
     ../../modules/home/apps/firefox.nix
-    ../../modules/home/apps/vscodium.nix
-    ../../modules/home/apps/kiro.nix
+    #../../modules/home/apps/vscodium.nix
+    #../../modules/home/apps/kiro.nix
     ../../modules/home/apps/ghostty.nix
 
     ../../modules/home/de/niri.nix
@@ -39,7 +39,10 @@
       imagemagick
       yazi
 
+      nil
       nixd
+
+      zed-editor
 
       thunar
       tumbler

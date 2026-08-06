@@ -42,7 +42,7 @@
   #services.xserver.videoDrivers = [ "amdgpu" ];
 
   services.upower.enable = true;
-  services.power-profiles-daemon.enable = true;  # power-profiles-daemon gestisce i profili energetici (bilanciato, risparmio, performance)
+  services.power-profiles-daemon.enable = true; # power-profiles-daemon gestisce i profili energetici (bilanciato, risparmio, performance)
 
   # ----- rete e localizzazione -----
   networking = {
@@ -50,12 +50,31 @@
     networkmanager.enable = true;
     firewall = {
       enable = true;
-      allowedTCPPorts = [ 
+      allowedTCPPorts = [
         22 # SSH
         1880 # Node-RED
       ];
 
       # allowedUDPPorts = [ ];
+    };
+
+    bridges = {
+      "br0" = {
+        interfaces = [ "enp1s0f0" ];
+      };
+    };
+
+    interfaces = {
+      "enp1s0f0".useDHCP = false; # L'interfaccia fisica non deve avere IP
+      "br0" = {
+        useDHCP = true;
+
+        #useDHCP = false;
+        #ipv4.addresses = [{
+        #  address = "192.168.0.100";
+        #  prefixLength = 24;
+        #}];
+      };
     };
   };
 
