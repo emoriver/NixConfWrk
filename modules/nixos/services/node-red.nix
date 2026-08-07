@@ -7,16 +7,20 @@
   };
   systemd.services.node-red.preStart = lib.mkAfter ''
     cd /var/lib/node-red
-    if [ ! -d "node_modules/@opcua/for-node-red" ] || \
+    if [ ! -d "node_modules/node-red-contrib-opcua-client" ] || \
       [ ! -d "node_modules/node-red-contrib-modbus" ] || \
       [ ! -d "node_modules/node-red-contrib-s7" ] || \
+      [ ! -d "node_modules/node-red-contrib-postgresql" ] || \
+      [ ! -d "node_modules/node-red-contrib-cron-plus" ] || \
       [ ! -d "node_modules/node-red-dashboard" ] || \
       [ ! -d "node_modules/node-red-contrib-ui-led" ] || \
       [ ! -d "node_modules/@node-red-contrib-themes" ]; then
       ${pkgs.nodejs}/bin/npm install --prefix /var/lib/node-red \
-        "@opcua/for-node-red@3.34.2" \
+        "node-red-contrib-opcua-client" \
         "node-red-contrib-modbus" \
         "node-red-contrib-s7" \
+        "node-red-contrib-postgresql" \
+        "node-red-contrib-cron-plus" \
         "node-red-dashboard" \
         "node-red-contrib-ui-led" \
         "@node-red-contrib-themes/theme-collection@4" \
