@@ -95,6 +95,13 @@
           carpinera = ./home/carpinera/nixct-pg-69.nix;
         };
       };      
+      nixct-graph-85 = {
+        system     = "x86_64-linux";
+        hostModule = ./hosts/nixct-graph-85;
+        users = {
+          carpinera = ./home/carpinera/nixct-graph-85.nix;
+        };
+      };
     };
 
     mkNixos = name: cfg:
