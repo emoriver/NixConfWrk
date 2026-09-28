@@ -24,7 +24,7 @@
       enable = true;
       allowedTCPPorts = [
         22 # SSH
-
+        3000 # Grafana
       ];
 /*      
       allowedUDPPorts = [
@@ -69,6 +69,46 @@
 
   security.pam.services.sshd.allowNullPassword = false;
 
+  services.grafana = {
+    enable = true;
+    settings = {
+      server = {
+        http_addr = "0.0.0.0";
+        http_port = 3000;
+        domain = "grafana.easynet.local";
+      };
+      security = {
+        admin_user = "admin";
+        admin_password = "$__file{/var/lib/secrets/grafana-admin}";
+        secret_key     = "$__file{/var/lib/secrets/grafana-secret-key}";
+      };
+      analytics.reporting_enabled = false;
+    };
+
+/*
+    provision = {
+      enable = true;
+      datasources.settings.datasources = [{
+        name = "Serraggi";
+        type = "mssql";
+        uid  = "serraggi";
+        url  = "sqlserver.dominio.local:1433";
+        user = "grafana_ro";
+        jsonData = {
+          database = "Tightening";
+          encrypt = "false";   # "true" se il server ha un certificato valido
+          maxOpenConns = 10;
+        };
+        secureJsonData.password = "$__file{/var/lib/secrets/mssql-grafana}";
+      }];
+      # dashboard versionate come JSON nel repo:
+      dashboards.settings.providers = [{
+        name = "default";
+        options.path = "/etc/grafana-dashboards";
+      }];
+    };
+*/  
+  };
 
   # ----- impostazioni di nix -----
   nixpkgs.config.allowUnfree = true;
