@@ -3,14 +3,15 @@
 {
   # Import delle app Home-Manager (moduli)
   imports = [
-    ../../modules/home/apps/zsh.nix
+    #../../modules/home/apps/zsh.nix
+     ../../modules/home/apps/starship.nix
     ../../modules/home/apps/git.nix
     ../../modules/home/apps/firefox.nix
-    ../../modules/home/apps/vscodium.nix
-    ../../modules/home/apps/kiro.nix
+    #../../modules/home/apps/vscodium.nix
+    #../../modules/home/apps/kiro.nix
 
   ];
-  
+
   # Identità + versione HM
   home.username = "carpinera";
   home.homeDirectory = "/home/carpinera";
@@ -28,6 +29,10 @@
       yazi
 
       nixd
+      nixfmt
+      nil
+
+      zed-editor
     ])
     ++(with pkgsUnstable; [
       #kiro  # installato tramite modules/home/apps/kiro.nix

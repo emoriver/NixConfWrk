@@ -7,7 +7,8 @@
 {
   # Import delle app Home-Manager (moduli)
   imports = [
-    ../../modules/home/apps/zsh.nix
+    #../../modules/home/apps/zsh.nix
+    ../../modules/home/apps/starship.nix
     ../../modules/home/apps/git.nix
     ../../modules/home/apps/firefox.nix
     #../../modules/home/apps/vscodium.nix
@@ -39,8 +40,9 @@
       imagemagick
       yazi
 
-      nil
       nixd
+      nixfmt
+      nil
 
       zed-editor
 
