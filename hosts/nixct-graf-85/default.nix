@@ -88,60 +88,60 @@
       analytics.reporting_enabled = false;
     };
 
-    # loki #
-    services.loki = {
+    provision = {
       enable = true;
-      configuration = {
-        auth_enabled = false;
-        analytics.reporting_enabled = false;
+      datasources.settings.datasources = [{
+        name = "Loki";
+        type = "loki";
+        uid  = "loki";
+        url  = "http://127.0.0.1:3100";
+      }];
+    };
+  };
 
-        server = {
-          http_listen_port = 3100;
-          grpc_listen_port = 9096;
-          log_level = "warn";
-        };
+  # loki #
+  services.loki = {
+    enable = true;
+    configuration = {
+      auth_enabled = false;
+      analytics.reporting_enabled = false;
 
-        common = {
-          path_prefix = "/var/lib/loki";
-          replication_factor = 1;
-          instance_addr = "127.0.0.1";
-          ring.kvstore.store = "inmemory";
-          storage.filesystem = {
-            chunks_directory = "/var/lib/loki/chunks";
-            rules_directory  = "/var/lib/loki/rules";
-          };
-        };
+      server = {
+        http_listen_port = 3100;
+        grpc_listen_port = 9096;
+        log_level = "warn";
+      };
 
-        schema_config.configs = [{
-          from = "2026-10-01";
-          store = "tsdb";
-          object_store = "filesystem";
-          schema = "v13";
-          index = { prefix = "index_"; period = "24h"; };
-        }];
-
-        limits_config = {
-          retention_period = "720h";          # 30 giorni
-          allow_structured_metadata = true;
-        };
-
-        compactor = {
-          working_directory = "/var/lib/loki/compactor";
-          retention_enabled = true;
-          delete_request_store = "filesystem";
+      common = {
+        path_prefix = "/var/lib/loki";
+        replication_factor = 1;
+        instance_addr = "127.0.0.1";
+        ring.kvstore.store = "inmemory";
+        storage.filesystem = {
+          chunks_directory = "/var/lib/loki/chunks";
+          rules_directory  = "/var/lib/loki/rules";
         };
       };
-    };
 
-    provision = {
-     enable = true;
-     datasources.settings.datasources = [{
-       name = "Loki";
-       type = "loki";
-       uid  = "loki";
-       url  = "http://127.0.0.1:3100";
-     }];
-   };
+      schema_config.configs = [{
+        from = "2026-10-01";
+        store = "tsdb";
+        object_store = "filesystem";
+        schema = "v13";
+        index = { prefix = "index_"; period = "24h"; };
+      }];
+
+      limits_config = {
+        retention_period = "720h";   # 30 giorni
+        allow_structured_metadata = true;
+      };
+
+      compactor = {
+        working_directory = "/var/lib/loki/compactor";
+        retention_enabled = true;
+        delete_request_store = "filesystem";
+      };
+    };
   };
 
   # ----- impostazioni di nix -----
