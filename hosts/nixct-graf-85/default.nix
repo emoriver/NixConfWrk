@@ -25,6 +25,7 @@
       allowedTCPPorts = [
         22 # SSH
         3000 # Grafana
+        3100 # Loki (push da Serilog)
       ];
 /*      
       allowedUDPPorts = [
@@ -54,6 +55,7 @@
 
 
   # ----- servizi di base -----
+  # ssh #
   services.openssh = {
     enable = true;
     #openFirewall = true;
@@ -69,6 +71,7 @@
 
   security.pam.services.sshd.allowNullPassword = false;
 
+  # grafana #
   services.grafana = {
     enable = true;
     settings = {
@@ -85,29 +88,60 @@
       analytics.reporting_enabled = false;
     };
 
-/*
-    provision = {
+    # loki #
+    services.loki = {
       enable = true;
-      datasources.settings.datasources = [{
-        name = "Serraggi";
-        type = "mssql";
-        uid  = "serraggi";
-        url  = "sqlserver.dominio.local:1433";
-        user = "grafana_ro";
-        jsonData = {
-          database = "Tightening";
-          encrypt = "false";   # "true" se il server ha un certificato valido
-          maxOpenConns = 10;
+      configuration = {
+        auth_enabled = false;
+        analytics.reporting_enabled = false;
+
+        server = {
+          http_listen_port = 3100;
+          grpc_listen_port = 9096;
+          log_level = "warn";
         };
-        secureJsonData.password = "$__file{/var/lib/secrets/mssql-grafana}";
-      }];
-      # dashboard versionate come JSON nel repo:
-      dashboards.settings.providers = [{
-        name = "default";
-        options.path = "/etc/grafana-dashboards";
-      }];
+
+        common = {
+          path_prefix = "/var/lib/loki";
+          replication_factor = 1;
+          instance_addr = "127.0.0.1";
+          ring.kvstore.store = "inmemory";
+          storage.filesystem = {
+            chunks_directory = "/var/lib/loki/chunks";
+            rules_directory  = "/var/lib/loki/rules";
+          };
+        };
+
+        schema_config.configs = [{
+          from = "2026-10-01";
+          store = "tsdb";
+          object_store = "filesystem";
+          schema = "v13";
+          index = { prefix = "index_"; period = "24h"; };
+        }];
+
+        limits_config = {
+          retention_period = "720h";          # 30 giorni
+          allow_structured_metadata = true;
+        };
+
+        compactor = {
+          working_directory = "/var/lib/loki/compactor";
+          retention_enabled = true;
+          delete_request_store = "filesystem";
+        };
+      };
     };
-*/  
+
+    provision = {
+     enable = true;
+     datasources.settings.datasources = [{
+       name = "Loki";
+       type = "loki";
+       uid  = "loki";
+       url  = "http://127.0.0.1:3100";
+     }];
+   };
   };
 
   # ----- impostazioni di nix -----
