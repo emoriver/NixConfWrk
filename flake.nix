@@ -19,13 +19,23 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    # --- macOS ---
+    nixpkgs-darwin.url = "github:NixOS/nixpkgs/nixpkgs-26.05-darwin";
+
+    nix-darwin = {
+      url = "github:nix-darwin/nix-darwin/nix-darwin-26.05";
+      inputs.nixpkgs.follows = "nixpkgs-darwin";
+    };
+
+    nix-homebrew.url = "github:zhaofengli/nix-homebrew";
+
     niri-flake = {
       url = "github:sodiboo/niri-flake";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
 
-  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, impermanence, flake-utils, ... } @ inputs:
+  outputs = { self, nixpkgs, nixpkgs-unstable, home-manager, impermanence, flake-utils, nix-darwin, nix-homebrew, ... } @ inputs:
   let
     lib = nixpkgs.lib;
 
@@ -128,12 +138,46 @@
           }
         ];
       };
+
+    # --- macOS (nix-darwin) ---
+    darwinHosts = {
+      ariv-macm6 = {
+        system     = "aarch64-darwin";
+        hostModule = ./hosts/ariv-macm6;
+        users = {
+          "andrea.riva" = ./home/andrea.riva/ariv-macm6.nix;
+        };
+      };
+    };
+
+    mkDarwin = name: cfg:
+    let
+      pkgsUnstable = mkPkgsUnstable cfg.system;
+    in
+      nix-darwin.lib.darwinSystem {
+        specialArgs = { inherit pkgsUnstable inputs; };
+        modules = [
+          cfg.hostModule
+          nix-homebrew.darwinModules.nix-homebrew
+          home-manager.darwinModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs    = true;
+              useUserPackages  = true;
+              extraSpecialArgs = { inherit pkgsUnstable inputs; };
+              users            = lib.mapAttrs (user: path: import path) cfg.users;
+              backupFileExtension = "backup";
+            };
+          }
+        ];
+      };
   in
   let
     systems = [ "x86_64-linux" "aarch64-linux" ];
   in
   {
-    nixosConfigurations = lib.mapAttrs mkNixos hosts;
+    nixosConfigurations  = lib.mapAttrs mkNixos hosts;
+    darwinConfigurations = lib.mapAttrs mkDarwin darwinHosts;
 
     packages = lib.genAttrs systems (system: {
       nodeRedPackages = mkNodeRedPackages system;
