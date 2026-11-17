@@ -18,8 +18,8 @@
 
   # ----- rete -----
   networking = {
-    hostName      = "ariv-macm6";
-    computerName  = "ariv-macm6";
+    hostName = "ariv-macm6";
+    computerName = "ariv-macm6";
     localHostName = "ariv-macm6";
   };
 
@@ -31,12 +31,13 @@
 
   # ----- homebrew (specifico host) -----
   homebrew = {
-    taps  = [ ];
+    taps = [ ];
     brews = [ ];
     casks = [
       "firefox"
       "keepassxc"
       "obsidian"
+      "shottr"
     ];
     masApps = {
       # "Xcode" = 497799835;
