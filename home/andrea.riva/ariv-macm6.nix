@@ -26,20 +26,21 @@
     };
   };
 
+  # CLI con integrazione shell gestita da HM
+  programs.fzf.enable  = true;   # ctrl-R, ctrl-T, alt-C
+  programs.eza.enable  = true;   # alias ls/ll/la
+  programs.bat.enable  = true;
+  programs.yazi.enable = true;   # wrapper `y` che fa cd all'uscita
+
   home.packages =
     (with pkgs; [
-      bat
-      eza
       fd
       ripgrep
-      fzf
       jq
       yq-go
-      yazi
 
       nixd
       nixfmt
-      nil
 
       zed-editor
     ])
