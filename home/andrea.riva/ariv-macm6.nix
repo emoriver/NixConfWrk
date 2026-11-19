@@ -13,24 +13,24 @@
     ../../modules/home/apps/firefox.nix
   ];
 
-  home.username      = "andrea.riva";
+  home.username = "andrea.riva";
   home.homeDirectory = "/Users/andrea.riva";
-  home.stateVersion  = "26.05";
+  home.stateVersion = "26.05";
 
   # Override darwin del modulo ghostty condiviso
   programs.ghostty = {
-    package = pkgs.ghostty-bin;   # pkgs.ghostty builda solo su Linux
+    package = pkgs.ghostty-bin; # pkgs.ghostty builda solo su Linux
     settings = {
-      font-size         = lib.mkForce 13;
+      font-size = lib.mkForce 13;
       window-decoration = lib.mkForce true;
     };
   };
 
   # CLI con integrazione shell gestita da HM
-  programs.fzf.enable  = true;   # ctrl-R, ctrl-T, alt-C
-  programs.eza.enable  = true;   # alias ls/ll/la
-  programs.bat.enable  = true;
-  programs.yazi.enable = true;   # wrapper `y` che fa cd all'uscita
+  programs.fzf.enable = true; # ctrl-R, ctrl-T, alt-C
+  programs.eza.enable = true; # alias ls/ll/la
+  programs.bat.enable = true;
+  programs.yazi.enable = true; # wrapper `y` che fa cd all'uscita
 
   home.packages =
     (with pkgs; [
@@ -42,7 +42,6 @@
       nixd
       nixfmt
 
-      zed-editor
     ])
     ++ (with pkgsUnstable; [
     ]);

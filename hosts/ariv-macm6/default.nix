@@ -36,8 +36,10 @@
     casks = [
       "firefox"
       "keepassxc"
+      "zed"
       "obsidian"
       "shottr"
+      "royal-tsx"
     ];
     masApps = {
       # "Xcode" = 497799835;
