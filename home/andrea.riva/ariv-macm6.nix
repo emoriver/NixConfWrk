@@ -1,6 +1,6 @@
 {
   pkgs,
-  pkgsUnstable,
+  #pkgsUnstable,
   lib,
   ...
 }:
@@ -32,8 +32,9 @@
   programs.bat.enable = true;
   programs.yazi.enable = true; # wrapper `y` che fa cd all'uscita
 
-  home.packages =
-    (with pkgs; [
+  home.packages = (
+    with pkgs;
+    [
       fd
       ripgrep
       jq
@@ -42,11 +43,16 @@
       nixd
       nixfmt
 
-    ])
-    ++ (with pkgsUnstable; [
-    ]);
+      #    ])
+      #    ++ (with pkgsUnstable; [  # qui mettere le versioni dei programmi unstable (dal Mac ha poco senso perchè i GUI vanno nei cask)
+      #    ]);
+    ]
+  );
 
   programs.zsh.shellAliases = {
-    update = "sudo darwin-rebuild switch --flake ~/Documents/NixConfWrk#ariv-macm6";
+    # applica la config (host dedotto da LocalHostName)
+    rebuild = "sudo darwin-rebuild switch --flake ~/Documents/NixConfWrk";
+    # aggiorna gli input del flake (lock condiviso con gli host NixOS!) e applica
+    update = "nix flake update --flake ~/Documents/NixConfWrk && rebuild";
   };
 }
